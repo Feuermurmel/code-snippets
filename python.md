@@ -1,5 +1,7 @@
 # Python
 
+Convert a file size in bytes into a human-readable string:
+
 ```python
 def format_size(size):
     if size < 1000:
@@ -43,4 +45,34 @@ print(format_size(2 ** 100))
 # 12.3 GB
 # 123 GB
 # 1267651 YB
+```
+
+Implement `__eq__()` and `__hash__()` by providing a single `_hashable_key()` method:
+
+```python
+class Hashable:
+    def __eq__(self, other):
+        return type(self) is type(other) and self._hashable_key() == other._hashable_key()
+    
+    def __hash__(self):
+        return hash(self._hashable_key())
+
+    def _hashable_key(self):
+        raise NotImplementedError()
+```
+
+File-like object which hashes data written to it. E.g. useful in conjunction with `shutil.copyfileobj()`:
+
+```python
+class _HashFile(io.RawIOBase):
+    """
+    A simple file-like object which calculates a hash of the data written to
+    it.
+    """
+
+    def __init__(self, hash=hashlib.sha256):
+        self.hash = hash()
+
+    def write(self, b):
+        self.hash.update(b)
 ```
