@@ -1,6 +1,6 @@
 # Python
 
-```
+```python
 def format_size(size):
     if size < 1000:
         return '{} bytes'.format(size)
