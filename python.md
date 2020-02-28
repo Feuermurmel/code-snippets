@@ -1,5 +1,49 @@
 # Python
 
+Tempalte for command line application with subcommands:
+
+```
+import argparse
+import sys
+
+
+class UserError(Exception):
+    pass
+
+
+def log(message):
+    print(message, file=sys.stderr, flush=True)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='command', required=True)
+
+    subparsers.add_parser('foo')
+
+    return parser.parse_args()
+
+
+def foo_command():
+    pass
+
+
+def main(command, **kwargs):
+    commands = {
+        'foo': foo_command}
+
+    commands[command](**kwargs)
+
+
+def entry_point():
+    try:
+        main(**vars(parse_args()))
+    except KeyboardInterrupt:
+        log('Operation interrupted.')
+    except UserError as e:
+        log('error: {e}')
+```
+
 Convert a file size in bytes into a human-readable string:
 
 ```python
