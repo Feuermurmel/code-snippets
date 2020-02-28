@@ -2,7 +2,7 @@
 
 Tempalte for command line application with subcommands:
 
-```
+```python
 import argparse
 import sys
 
