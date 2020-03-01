@@ -40,8 +40,10 @@ def entry_point():
         main(**vars(parse_args()))
     except KeyboardInterrupt:
         log('Operation interrupted.')
+        sys.exit(1)
     except UserError as e:
-        log('error: {e}')
+        log('error: {}', e)
+        sys.exit(2)
 ```
 
 Convert a file size in bytes into a human-readable string:
