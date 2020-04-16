@@ -107,7 +107,7 @@ class Hashable:
         raise NotImplementedError()
 ```
 
-File-like object which hashes data written to it. E.g. useful in conjunction with `shutil.copyfileobj()`:
+#### File-like object which hashes data written to it. E.g. useful in conjunction with `shutil.copyfileobj()`
 
 ```python
 class _HashFile(io.RawIOBase):
