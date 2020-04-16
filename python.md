@@ -122,3 +122,37 @@ class _HashFile(io.RawIOBase):
     def write(self, b):
         self.hash.update(b)
 ```
+
+Context managers to atomically replace a file.
+
+```
+import contextlib
+import pathlib
+from typing import ContextManager, BinaryIO
+
+
+@contextlib.contextmanager
+def atomically_replaced_path(dest_path: pathlib.Path) -> ContextManager[pathlib.Path]:
+    temp_path = dest_path.with_name(dest_path.name + '~')
+
+    yield temp_path
+
+    temp_path.rename(dest_path)
+
+
+@contextlib.contextmanager
+def atomically_replaced_file(dest_path: pathlib.Path) -> ContextManager[BinaryIO]:
+    with atomically_replaced_path(dest_path) as temp_path:
+        with temp_path.open('wb') as file:
+            try:
+                yield file
+            except Exception:
+                temp_path.unlink()
+
+                raise
+
+
+def atomically_replace_symlink(dest_path: pathlib.Path, target_path: pathlib.Path):
+    with atomically_replaced_path(dest_path) as temp_path:
+        temp_path.symlink_to(target_path)
+```
