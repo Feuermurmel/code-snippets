@@ -123,6 +123,8 @@ class _HashFile(io.RawIOBase):
         self.hash.update(b)
 ```
 
+### Test
+
 Context managers to atomically replace a file:
 
 ```python
