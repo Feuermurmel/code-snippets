@@ -123,7 +123,7 @@ class _HashFile(io.RawIOBase):
         self.hash.update(b)
 ```
 
-Context managers to atomically replace a file.
+Context managers to atomically replace a file:
 
 ```python
 import contextlib
