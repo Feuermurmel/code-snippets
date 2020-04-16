@@ -1,6 +1,6 @@
 # Python
 
-Tempalte for command line application with subcommands:
+#### Tempalte for command line application with subcommands
 
 ```python
 import argparse
@@ -46,7 +46,7 @@ def entry_point():
         sys.exit(2)
 ```
 
-Convert a file size in bytes into a human-readable string:
+#### Convert a file size in bytes into a human-readable string
 
 ```python
 def format_size(size):
@@ -93,7 +93,7 @@ print(format_size(2 ** 100))
 # 1267651 YB
 ```
 
-Implement `__eq__()` and `__hash__()` by providing a single `_hashable_key()` method:
+#### Implement `__eq__()` and `__hash__()` by providing a single `_hashable_key()` method
 
 ```python
 class Hashable:
@@ -123,9 +123,7 @@ class _HashFile(io.RawIOBase):
         self.hash.update(b)
 ```
 
-### Test
-
-Context managers to atomically replace a file:
+#### Context managers to atomically replace a file
 
 ```python
 import contextlib
