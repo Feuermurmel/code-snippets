@@ -125,8 +125,9 @@ class _HashFile(io.RawIOBase):
 
 Context managers to atomically replace a file.
 
-```
+```python
 import contextlib
+import os
 import pathlib
 from typing import ContextManager, BinaryIO
 
@@ -150,6 +151,8 @@ def atomically_replaced_file(dest_path: pathlib.Path) -> ContextManager[BinaryIO
                 temp_path.unlink()
 
                 raise
+
+            os.fsync(file.fileno())
 
 
 def atomically_replace_symlink(dest_path: pathlib.Path, target_path: pathlib.Path):
