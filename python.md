@@ -42,7 +42,7 @@ def entry_point():
         log('Operation interrupted.')
         sys.exit(1)
     except UserError as e:
-        log('error: {}', e)
+        log('error: {e}')
         sys.exit(2)
 ```
 
