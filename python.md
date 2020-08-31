@@ -107,6 +107,18 @@ class Hashable:
         raise NotImplementedError()
 ```
 
+#### Implement `__lt__()` and co. by providing a single `_hashable_key()` method
+
+```python
+@total_ordering
+class Ordered(Hashable):
+    def __lt__(self, other):
+        if type(self) == type(other):
+            return self._hashable_key() < other._hashable_key()
+        else:
+            return NotImplemented
+```
+
 #### File-like object which hashes data written to it. E.g. useful in conjunction with `shutil.copyfileobj()`
 
 ```python
