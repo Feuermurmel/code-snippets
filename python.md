@@ -1,41 +1,5 @@
 # Python
 
-#### Tempalte for command line application
-
-```python
-import argparse
-import sys
-
-
-class UserError(Exception):
-    pass
-
-
-def log(message):
-    print(message, file=sys.stderr, flush=True)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-
-    return parser.parse_args()
-
-
-def main():
-    pass
-
-
-def entry_point():
-    try:
-        main(**vars(parse_args()))
-    except KeyboardInterrupt:
-        log('Operation interrupted.')
-        sys.exit(1)
-    except UserError as e:
-        log(f'error: {e}')
-        sys.exit(2)
-```
-
 #### Tempalte for command line application with subcommands
 
 ```python
@@ -74,12 +38,12 @@ def main(command, **kwargs):
 def entry_point():
     try:
         main(**vars(parse_args()))
-    except KeyboardInterrupt:
-        log('Operation interrupted.')
-        sys.exit(1)
     except UserError as e:
         log(f'error: {e}')
-        sys.exit(2)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        log('Operation interrupted.')
+        sys.exit(130)
 ```
 
 #### Convert a file size in bytes into a human-readable string
