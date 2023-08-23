@@ -4,15 +4,12 @@
 
 ```python
 import argparse
+import logging
 import sys
 
 
 class UserError(Exception):
     pass
-
-
-def log(message):
-    print(message, file=sys.stderr, flush=True)
 
 
 def parse_args():
@@ -36,13 +33,15 @@ def main(command, **kwargs):
 
 
 def entry_point():
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
+
     try:
         main(**vars(parse_args()))
     except UserError as e:
-        log(f'error: {e}')
+        logging.error(f'error: {e}')
         sys.exit(1)
     except KeyboardInterrupt:
-        log('Operation interrupted.')
+        logging.error('Operation interrupted.')
         sys.exit(130)
 ```
 
