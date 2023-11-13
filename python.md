@@ -1,38 +1,53 @@
 # Python
 
-#### Tempalte for command line application with subcommands
+#### Template for command line application
 
 ```python
-import argparse
+from __future__ import annotations
+
 import logging
 import sys
+from pathlib import Path
+
+from argparse import Namespace, ArgumentParser
 
 
 class UserError(Exception):
     pass
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
+def parse_args() -> Namespace:
+    parser = ArgumentParser()
+    parser.add_argument('files', type=Path, nargs='+')
+    
+    ### For subcommands
     subparsers = parser.add_subparsers(dest='command', required=True)
 
-    subparsers.add_parser('foo')
+    foo_parser = subparsers.add_parser('foo')
+    foo_parser.add_argument('count', type=int)
+    ###
 
     return parser.parse_args()
 
 
-def foo_command():
-    pass
+### For subcommands
+def foo_command(count: int) -> None:
+    print(count)
+###
 
 
-def main(command, **kwargs):
+def main(command: str, paths: list[Path], **kwargs) -> None:
+    print(paths)
+    
+    ### For subcommands
     commands = {
         'foo': foo_command}
 
     commands[command](**kwargs)
+    ###
 
 
-def entry_point():
+def entry_point() -> None:
     logging.basicConfig(level=logging.INFO, format='%(message)s')
 
     try:
